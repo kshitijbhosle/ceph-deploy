@@ -1,0 +1,24 @@
+#!  /bin/bash
+
+
+sudo yum install ceph-deploy -y
+mkdir ceph-deploy
+cd ceph-deploy/
+ls
+lsblk
+sudo ceph-deploy new prod.servera prod.serverb
+sudo ceph-deploy install prod.servera prod.serverb
+sudo ceph-deploy mon create prod.servera prod.serverb
+sudo ceph-deploy gatherkeys prod.servera
+sudo ceph -s
+ls
+cd
+cd ceph-deploy/
+sudo cp ceph.conf /etc/ceph/
+sudo cp ceph.client.admin.keyring /etc/ceph/
+sudo ceph -s
+sudo ceph-deploy disk list prod.servera
+sudo ceph-deploy osd create --data /dev/xvdb prod.servera prod.serverb
+sudo ceph-deploy osd create --data /dev/xvdb prod.servera
+sudo ceph-deploy osd create --data /dev/xvdb prod.serverb
+sudo ceph -s
